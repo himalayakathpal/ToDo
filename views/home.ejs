@@ -1,0 +1,78 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/home.css">
+    </head>
+    <body>
+        <main>
+        <h1>TODO App</h1>
+            <!--Form to add item to list-->
+            <form action='/create' method="POST" id="data-form">
+                <table id='form-table'>
+                <tr>
+                    <td><label for="description">DESCRIPTION</label></td>
+                </tr>
+                <tr>
+                    <td><input type="textarea" name="description" id="description" placeholder="What you need to do?" required></td>
+                </tr>
+                <tr>
+                    <td><label for="category">CATEGORY</label></td>
+                    <td><label for="due-date">DUE DATE</label></td>
+                    
+                </tr>
+                <tr>
+                    <td>
+                        <select name="category" id="category">
+                            <option value=null selected>Choose a category</option>
+                            <option value="WORK">WORK</option>
+                            <option value="SCHOOL">SCHOOL</option>
+                            <option value="PERSONAL">PERSONAL</option>
+                            <option value="CLEANING">CLEANING</option>
+                            <option value="OTHER">OTHER</option>
+                        </select>
+                    </td>
+                    <td><input type="date" id="due-date" name="date"></td>
+                </tr>
+                <tr>
+                    <td colspan='2' align="right"><button type="submit" id="add-button"><i class="fas fa-plus add-remove-icon"></i>ADD TASK</button></td>
+            </form>
+            <!--Form to remove items from list-->
+            <form action="/delete" method="POST" id='delete-form'>
+                    <td><button type="submit" id="delete-button"><i class="fas fa-trash-alt add-remove-icon"></i>DELETE TASKS</button></td>
+                </tr> 
+            </table>
+
+            <!-- ToDo List-->
+            <div><!--Form to add item to list-->
+                <ul>
+                
+                    <% for (let i of tasks){ %>
+                        <li>
+                            <hr>
+                            <div class='check'><input type="checkbox" name="id" value=<%= i._id %>></div>
+                            <div class='details'>
+                                <p><%= i.taskDescription %></p>
+                                <p><i class="far fa-calendar-alt calendar-logo"></i><% if(!i.dueDate){ %>No deadline <% }else{ %> <%= i.dueDate.toDateString() %><% } %></p>
+                            </div>
+                            <div class='category'>
+                                <% if(i.category!='null'&&i.category=='work'){ %>
+                                    <p class='category-purple'> <%= i.category %></p>
+                                    <% }else if(i.category!='null'){ %>
+                                        <p class='category-yellow'> <%= i.category %></p>
+                                        <% } %>
+                            </div>
+                            
+                            
+                            
+                        </li>
+                        
+
+
+                    <% } %>
+            
+                </ul>
+            </div>
+            </form>
+        </main>
+    </body>
+</html>
